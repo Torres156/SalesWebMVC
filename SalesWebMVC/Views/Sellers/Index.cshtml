@@ -5,6 +5,20 @@
 }
 <h2>Sellers</h2>
 
+<script type="text/javascript">
+    function AnswerDelete(id)
+    {
+        if ( confirm("Do you want delete this seller?") == true)
+        {
+            window.location.href = '@Url.Action("Delete", "Sellers")?id=' + id + "&answer=true";
+        }
+        else
+        {
+            window.location.href = '@Url.Action("Delete", "Sellers")?id=' + id + "&answer=false";
+        }
+    }
+ </script>
+
 <a asp-action="Create" class="btn btn-primary">Create</a>
 <table class="table table-striped table-hover">
     <thead>

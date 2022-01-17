@@ -30,10 +30,14 @@ namespace SalesWebMVC.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Delete()
+        [HttpGet]
+        public IActionResult Delete(int? id)
         {
+            if (id == null)
+                return NotFound();
 
-            return RedirectToAction(nameof(Index));
+            _sellerService.Remove(id.Value);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

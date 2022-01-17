@@ -23,8 +23,20 @@ namespace SalesWebMVC.Services
 
         public void Remove(Seller obj)
         {
+            if (obj == null)
+                return;
+
             _context.Sellers.Remove(obj);
             _context.SaveChanges();
         }
+
+        public void Remove(int Id)
+        {
+            var seller = FindById(Id);
+            Remove(seller);
+        }
+
+        public Seller FindById(int Id)
+            => _context.Sellers.FirstOrDefault(i => i.Id == Id);
     }
 }
