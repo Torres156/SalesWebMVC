@@ -1,0 +1,42 @@
+﻿@model SellerFormViewModel
+
+<h2>Create Seller</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="">
+                <label asp-for="Seller.Name" class="form-label"></label>
+                <input asp-for="Seller.Name" class="form-control" />
+            </div>
+
+             <div class="">
+                <label asp-for="Seller.Email" class="form-label"></label>
+                <input asp-for="Seller.Email" class="form-control" />
+            </div>
+
+            <div class="">
+                <label asp-for="Seller.BirthData" class="form-label"></label>
+                <input asp-for="Seller.BirthData" class="form-control" />
+            </div>
+
+            <div class="">
+                <label asp-for="Seller.BaseSalary" class="form-label"></label>
+                <input asp-for="Seller.BaseSalary" class="form-control" />
+            </div>
+            <div class="">
+                <label asp-for="Seller.Department" class="form-label"></label>
+                <select asp-for="Seller.DepartmentId" 
+                asp-items="@(new SelectList(Model.Departments,"Id", "Name"))"
+                class="form-control"></select>
+            </div>
+            <hr />
+            <div class=""> 
+                <input type="submit" value="Create" class="btn btn-secondary" />
+            </div>
+                
+        </form>
+    </div>
+</div>
