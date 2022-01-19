@@ -14,34 +14,41 @@ namespace SalesWebMVC.Services
             _context = context;
         }
 
-        public List<Seller> FindAll()
-            => _context.Sellers.ToList();
+        public async Task<List<Seller>> FindAllAsync()
+            => await _context.Sellers.ToListAsync();
 
-        public void Insert(Seller obj)
+        public async Task InsertAsync(Seller obj)
         {
             _context.Sellers.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Remove(Seller obj)
+        public async Task Remove(Seller obj)
         {
             if (obj == null)
                 return;
 
-            _context.Sellers.Remove(obj);
-            _context.SaveChanges();
+            try
+            {
+                _context.Sellers.Remove(obj);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateException e)
+            {
+                throw new IntegratyException(e.Message);
+            }
         }
 
-        public void Remove(int Id)
+        public async void Remove(int Id)
         {
-            var seller = FindById(Id);
-            Remove(seller);
+            var seller = await FindByIdAsync(Id);
+            await Remove(seller);
         }
 
-        public Seller FindById(int Id)
-            => _context.Sellers.Include(i => i.Department).FirstOrDefault(i => i.Id == Id);
+        public async Task<Seller> FindByIdAsync(int Id)
+            => await _context.Sellers.Include(i => i.Department).FirstOrDefaultAsync(i => i.Id == Id);
 
-        public void Update(Seller seller)
+        public async Task UpdateAsync(Seller seller)
         {
             if (!_context.Sellers.Any(i => i.Id == seller.Id))
             {
@@ -51,7 +58,7 @@ namespace SalesWebMVC.Services
             try
             {
                 _context.Update(seller);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
             {
