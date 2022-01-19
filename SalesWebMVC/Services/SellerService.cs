@@ -1,5 +1,6 @@
 ﻿using SalesWebMVC.Data;
 using SalesWebMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMVC.Services
 {
@@ -37,6 +38,6 @@ namespace SalesWebMVC.Services
         }
 
         public Seller FindById(int Id)
-            => _context.Sellers.FirstOrDefault(i => i.Id == Id);
+            => _context.Sellers.Include(i => i.Department).FirstOrDefault(i => i.Id == Id);
     }
 }
